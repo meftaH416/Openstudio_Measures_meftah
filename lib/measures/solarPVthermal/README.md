@@ -2,7 +2,7 @@
 
 ###### (Automatically generated documentation)
 
-# AddPVT
+# AddSolarPVT
 
 ## Description
 This measure will add solar PhotoVoltaicThermal object to the system. PVT system can be add to airloop outdoor air system or plant loop
@@ -85,7 +85,7 @@ ___
 ## Arguments
 
 
-### Uniquie Name for the PVT object
+### Name for the PVT object
 
 **Name:** obj_name,
 **Type:** String,
@@ -170,7 +170,7 @@ ___
 **Model Dependent:** false
 
 
-### Thermal Conversion Eﬀiciency Input Mode Type
+### Thermal Conversion Eﬀiciency Input Mode (Currently only Fixed)
 
 **Name:** therm_eff,
 **Type:** Choice,
@@ -188,17 +188,6 @@ ___
 **Units:** fraction,
 **Required:** false,
 **Model Dependent:** false
-
-
-### Schedule Name for Thermal Conversion Eﬀiciency
-
-**Name:** schedule_name,
-**Type:** Choice,
-**Units:** ,
-**Required:** false,
-**Model Dependent:** false
-
-**Choice Display Names** []
 
 
 ### Front Surface Emittance
@@ -228,7 +217,7 @@ ___
 **Model Dependent:** false
 
 
-### Thermal Conversion Eﬀiciency Input Mode Type
+### Thermal Conversion Eﬀiciency Input Mode (currently Fixed only)
 
 **Name:** conversion_eff,
 **Type:** Choice,
@@ -246,17 +235,6 @@ ___
 **Units:** fraction,
 **Required:** false,
 **Model Dependent:** false
-
-
-### PV Schedule Name
-
-**Name:** pv_schedule_name,
-**Type:** Choice,
-**Units:** ,
-**Required:** false,
-**Model Dependent:** false
-
-**Choice Display Names** []
 
 
 ### Storage Tank Volume (m3)

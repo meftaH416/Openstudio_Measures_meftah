@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
-  <name>add_pvt</name>
+  <name>add_solar_pvt</name>
   <uid>95910f6c-608a-4612-bcf7-951447cf03d4</uid>
-  <version_id>9389f89d-629e-4623-8d16-27370c86395d</version_id>
-  <version_modified>2025-02-02T06:07:46Z</version_modified>
+  <version_id>a05e1cdb-8426-4a5a-a608-ba57a6ff5fca</version_id>
+  <version_modified>2025-02-02T07:47:37Z</version_modified>
   <xml_checksum>8D846F04</xml_checksum>
-  <class_name>AddPVT</class_name>
-  <display_name>AddPVT</display_name>
+  <class_name>AddSolarPVT</class_name>
+  <display_name>AddSolarPVT</display_name>
   <description>This measure will add solar PhotoVoltaicThermal object to the system. PVT system can be add to airloop outdoor air system or plant loop</description>
   <modeler_description>Solar PhotoVoltaicThermal object generate electricity and supply thermal energy. In order use thermal energy to heat water,
     a Plant Loop must be created. The emply plant loop will contain a Pump to the supply inlet node, SetpointManagerSchedule object to supply outlet node
@@ -18,7 +18,7 @@
   <arguments>
     <argument>
       <name>obj_name</name>
-      <display_name>Uniquie Name for the PVT object</display_name>
+      <display_name>Name for the PVT object</display_name>
       <type>String</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -100,7 +100,7 @@
     </argument>
     <argument>
       <name>therm_eff</name>
-      <display_name>Thermal Conversion Eﬀiciency Input Mode Type</display_name>
+      <display_name>Thermal Conversion Eﬀiciency Input Mode (Currently only Fixed)</display_name>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -124,13 +124,6 @@
       <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>0.2</default_value>
-    </argument>
-    <argument>
-      <name>schedule_name</name>
-      <display_name>Schedule Name for Thermal Conversion Eﬀiciency</display_name>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>front_surf_emittance</name>
@@ -159,7 +152,7 @@
     </argument>
     <argument>
       <name>conversion_eff</name>
-      <display_name>Thermal Conversion Eﬀiciency Input Mode Type</display_name>
+      <display_name>Thermal Conversion Eﬀiciency Input Mode (currently Fixed only)</display_name>
       <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -183,13 +176,6 @@
       <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>0.3</default_value>
-    </argument>
-    <argument>
-      <name>pv_schedule_name</name>
-      <display_name>PV Schedule Name</display_name>
-      <type>Choice</type>
-      <required>false</required>
-      <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>storage_vol</name>
@@ -243,7 +229,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>F35C0367</checksum>
+      <checksum>7D70AFDF</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -260,55 +246,13 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>606721D0</checksum>
-    </file>
-    <file>
-      <filename>PeakPeriodSchedulesShift_Test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>456257DD</checksum>
-    </file>
-    <file>
-      <filename>base-schedules-detailed-occupancy-stochastic.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>CFA80A78</checksum>
+      <checksum>5D812FF7</checksum>
     </file>
     <file>
       <filename>base.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
-      <checksum>8193AAB9</checksum>
-    </file>
-    <file>
-      <filename>files/schedules20230418-20180-18nykxu.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>D6FBB6B6</checksum>
-    </file>
-    <file>
-      <filename>files/unmodified_schedules.csv</filename>
-      <filetype>csv</filetype>
-      <usage_type>test</usage_type>
-      <checksum>D6FBB6B6</checksum>
-    </file>
-    <file>
-      <filename>test_smooth_schedules.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>C85A2F6A</checksum>
-    </file>
-    <file>
-      <filename>test_stochastic_schedules.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>77977945</checksum>
-    </file>
-    <file>
-      <filename>test_stochastic_schedules_no_stacking.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>36631473</checksum>
+      <checksum>C20BBD81</checksum>
     </file>
   </files>
 </measure>
