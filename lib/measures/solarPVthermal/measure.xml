@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+<measure>
+  <schema_version>3.1</schema_version>
+  <name>add_pvt</name>
+  <uid>95910f6c-608a-4612-bcf7-951447cf03d4</uid>
+  <version_id>9389f89d-629e-4623-8d16-27370c86395d</version_id>
+  <version_modified>2025-02-02T06:07:46Z</version_modified>
+  <xml_checksum>8D846F04</xml_checksum>
+  <class_name>AddPVT</class_name>
+  <display_name>AddPVT</display_name>
+  <description>This measure will add solar PhotoVoltaicThermal object to the system. PVT system can be add to airloop outdoor air system or plant loop</description>
+  <modeler_description>Solar PhotoVoltaicThermal object generate electricity and supply thermal energy. In order use thermal energy to heat water,
+    a Plant Loop must be created. The emply plant loop will contain a Pump to the supply inlet node, SetpointManagerSchedule object to supply outlet node
+    and a water heating object to supply outlet. This Measure will create a Secondry Plant Loop that will contain a PV Collector to supply inlet, then a Pump,
+    then a Storage Tank and the same SetpointManagerSchedule.
+    
+    The Storage Tank to secondary loop will be added to demand side of Primary Plant Loop</modeler_description>
+  <arguments>
+    <argument>
+      <name>obj_name</name>
+      <display_name>Uniquie Name for the PVT object</display_name>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Solar PhotoVoltaic Thermal Obj</default_value>
+    </argument>
+    <argument>
+      <name>surf_name</name>
+      <display_name>Surface Name</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>work_fluid</name>
+      <display_name>Working fluid type (Air or Water)</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Air</default_value>
+      <choices>
+        <choice>
+          <value>Water</value>
+          <display_name>Water</display_name>
+        </choice>
+        <choice>
+          <value>Air</value>
+          <display_name>Air</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>plant_loop_name</name>
+      <display_name>Existing Plant Loop Name</display_name>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>HTR WTR Loop</default_value>
+    </argument>
+    <argument>
+      <name>air_loop_name</name>
+      <display_name>Existing AirLoop HVAC Outdoor Air Name</display_name>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Outdoor Air System</default_value>
+    </argument>
+    <argument>
+      <name>design_flow_rate</name>
+      <display_name>Design flow rate (m3/s)</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>4e-05</default_value>
+    </argument>
+    <argument>
+      <name>node_storage_tank</name>
+      <display_name>Node to add Storage Tank to Primary Plant Loop</display_name>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Node 1</default_value>
+    </argument>
+    <argument>
+      <name>per_name</name>
+      <display_name>SolarCollectorPerformance:PhotovoltaicThermal Name</display_name>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Performance Obj</default_value>
+    </argument>
+    <argument>
+      <name>fract_of_surface</name>
+      <display_name>Fraction of Surface Area with Active Thermal Collector</display_name>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.75</default_value>
+    </argument>
+    <argument>
+      <name>therm_eff</name>
+      <display_name>Thermal Conversion Eﬀiciency Input Mode Type</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Fixed</default_value>
+      <choices>
+        <choice>
+          <value>Fixed</value>
+          <display_name>Fixed</display_name>
+        </choice>
+        <choice>
+          <value>Scheduled</value>
+          <display_name>Scheduled</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>ther_eff_val</name>
+      <display_name>Thermal Conversion Eﬀiciency</display_name>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.2</default_value>
+    </argument>
+    <argument>
+      <name>schedule_name</name>
+      <display_name>Schedule Name for Thermal Conversion Eﬀiciency</display_name>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>front_surf_emittance</name>
+      <display_name>Front Surface Emittance</display_name>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.9</default_value>
+    </argument>
+    <argument>
+      <name>generator_name</name>
+      <display_name>Generator:Photovoltaic Name</display_name>
+      <type>String</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Generator Obj</default_value>
+    </argument>
+    <argument>
+      <name>frac_surf_area_with_pv</name>
+      <display_name>Fraction of Included Surface Area with PV</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.75</default_value>
+    </argument>
+    <argument>
+      <name>conversion_eff</name>
+      <display_name>Thermal Conversion Eﬀiciency Input Mode Type</display_name>
+      <type>Choice</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>Fixed</default_value>
+      <choices>
+        <choice>
+          <value>Fixed</value>
+          <display_name>Fixed</display_name>
+        </choice>
+        <choice>
+          <value>Scheduled</value>
+          <display_name>Scheduled</display_name>
+        </choice>
+      </choices>
+    </argument>
+    <argument>
+      <name>conversion_eff_val</name>
+      <display_name>Generator Conversion Eﬀiciency NB: Total efficiency of thermal and PV must be &lt;=1</display_name>
+      <type>Double</type>
+      <units>fraction</units>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.3</default_value>
+    </argument>
+    <argument>
+      <name>pv_schedule_name</name>
+      <display_name>PV Schedule Name</display_name>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>storage_vol</name>
+      <display_name>Storage Tank Volume (m3)</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0.19</default_value>
+    </argument>
+  </arguments>
+  <outputs />
+  <provenances />
+  <tags>
+    <tag>Whole Building.Whole Building Schedules</tag>
+  </tags>
+  <attributes>
+    <attribute>
+      <name>Measure Language</name>
+      <value>Ruby</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Measure Type</name>
+      <value>ModelMeasure</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+  </attributes>
+  <files>
+    <file>
+      <filename>LICENSE.md</filename>
+      <filetype>md</filetype>
+      <usage_type>license</usage_type>
+      <checksum>8696A072</checksum>
+    </file>
+    <file>
+      <filename>README.md</filename>
+      <filetype>md</filetype>
+      <usage_type>readme</usage_type>
+      <checksum>F35C0367</checksum>
+    </file>
+    <file>
+      <filename>README.md.erb</filename>
+      <filetype>erb</filetype>
+      <usage_type>readmeerb</usage_type>
+      <checksum>456E1929</checksum>
+    </file>
+    <file>
+      <version>
+        <software_program>OpenStudio</software_program>
+        <identifier>3.5.1</identifier>
+        <min_compatible>3.5.1</min_compatible>
+      </version>
+      <filename>measure.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>script</usage_type>
+      <checksum>606721D0</checksum>
+    </file>
+    <file>
+      <filename>PeakPeriodSchedulesShift_Test.rb</filename>
+      <filetype>rb</filetype>
+      <usage_type>test</usage_type>
+      <checksum>456257DD</checksum>
+    </file>
+    <file>
+      <filename>base-schedules-detailed-occupancy-stochastic.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>CFA80A78</checksum>
+    </file>
+    <file>
+      <filename>base.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>8193AAB9</checksum>
+    </file>
+    <file>
+      <filename>files/schedules20230418-20180-18nykxu.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>test</usage_type>
+      <checksum>D6FBB6B6</checksum>
+    </file>
+    <file>
+      <filename>files/unmodified_schedules.csv</filename>
+      <filetype>csv</filetype>
+      <usage_type>test</usage_type>
+      <checksum>D6FBB6B6</checksum>
+    </file>
+    <file>
+      <filename>test_smooth_schedules.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>C85A2F6A</checksum>
+    </file>
+    <file>
+      <filename>test_stochastic_schedules.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>77977945</checksum>
+    </file>
+    <file>
+      <filename>test_stochastic_schedules_no_stacking.osm</filename>
+      <filetype>osm</filetype>
+      <usage_type>test</usage_type>
+      <checksum>36631473</checksum>
+    </file>
+  </files>
+</measure>
