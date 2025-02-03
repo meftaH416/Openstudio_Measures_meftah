@@ -12,13 +12,13 @@ Solar PhotoVoltaicThermal object generate electricity and supply thermal energy.
     a Plant Loop must be created. The emply plant loop will contain a Pump to the supply inlet node, SetpointManagerSchedule object to supply outlet node
     and a water heating object to supply outlet. This Measure will create a Secondry Plant Loop that will contain a PV Collector to supply inlet, then a Pump,
     then a Storage Tank and the same SetpointManagerSchedule.
-    
     The Storage Tank to secondary loop will be added to demand side of Primary Plant Loop
 
 ## Measure Type
 ModelMeasure
 
 ## Taxonomy
+
 
 
 ## Arguments
