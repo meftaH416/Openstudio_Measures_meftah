@@ -19,7 +19,11 @@ ModelMeasure
 
 ## Taxonomy
 
+Incase that user want to use this PVT object for water heating, they need to create a primary plant loop including Pump to supply inlet node, WaterHeaterMixed and a SetPointManagerSchedule added to supply outlet node. Please see the PNG file named plantloop for visualization. The primary file will have everything except the middle WaterStorage (it has double connection in the image).
 
+The measure will create a PVT collector similar to the PNG file named solarloop.  Look that the WaterStorage is on the demand side of the secondary loop. 
+
+This WaterStorage object will be added to user defined Node of primary loop as shown in plantloop PNG file. 
 
 ## Arguments
 
