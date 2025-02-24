@@ -6,6 +6,7 @@
 
 ## Description
 This measure will change the floor area of a building multiplying by a user-defined number.
+Currently the measure is applicable and tested for rectangular single zone building model.
 
 ## Modeler Description
 The floor area and associated vertices of the building surfaces will be changed.
