@@ -3,8 +3,8 @@
   <schema_version>3.1</schema_version>
   <name>change_floor_area</name>
   <uid>ab2a85d4-ac29-4cd7-985b-90d9568ce7a7</uid>
-  <version_id>3b6669c9-d946-4199-bc47-b843b6d139b4</version_id>
-  <version_modified>2025-02-24T07:12:16Z</version_modified>
+  <version_id>5be03432-664a-4ea7-9aff-ef349da3280e</version_id>
+  <version_modified>2025-02-24T07:23:41Z</version_modified>
   <xml_checksum>C1840F32</xml_checksum>
   <class_name>ChangeFloorArea</class_name>
   <display_name>Change Floor Area</display_name>
@@ -102,48 +102,6 @@
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
       <checksum>039B5031</checksum>
-    </file>
-    <file>
-      <filename>functions.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>resource</usage_type>
-      <checksum>B2F878E6</checksum>
-    </file>
-    <file>
-      <filename>EnvelopeAndLoadTestModel_01.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>3956B3D1</checksum>
-    </file>
-    <file>
-      <filename>EnvelopeAndLoadTestModel_02_RotatedSpaceAndBuilding.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>74A6EE8C</checksum>
-    </file>
-    <file>
-      <filename>ReverseTranslatedModel.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>0B94403D</checksum>
-    </file>
-    <file>
-      <filename>SetWindowToWallRatioByFacade_Test.rb</filename>
-      <filetype>rb</filetype>
-      <usage_type>test</usage_type>
-      <checksum>CE5F498C</checksum>
-    </file>
-    <file>
-      <filename>Triangles.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>19169728</checksum>
-    </file>
-    <file>
-      <filename>prototype_sec_sch.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>581DA01B</checksum>
     </file>
   </files>
 </measure>
