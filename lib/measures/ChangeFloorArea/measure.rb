@@ -49,10 +49,36 @@ class ChangeFloorArea < OpenStudio::Measure::ModelMeasure
 
     runner.registerInfo("Number of surfaces: #{surfaces.size}")
 
+    # Check all the surfaces and find floor surfaces, then get their vertices
+    floor_surface = []
+    width = 0
+    length = 0
     surfaces.each do |surface|
       runner.registerInfo("Surface Name: #{surface.name}")
+
+      # Check if the surface is a floor
+      if surface.surfaceType == "Floor"
+        floor_surface << surface
+        runner.registerInfo("Vertices for floor surface: #{surface.name}:")
+
+        # Loop through the vertices of the surface
+        surface.vertices.each do |vertex|
+          runner.registerInfo("  Vertex: (#{vertex.x}, #{vertex.y}, #{vertex.z})")
+          
+          # Check the vertices to determine width and length
+          if vertex.z == 0 && vertex.x == 0 && vertex.y != 0
+            width = vertex.y
+          elsif vertex.z == 0 && vertex.y == 0 && vertex.x != 0
+            length = vertex.x
+          end
+        end
+      end
     end
 
+    # Log the final width and length of the building
+    runner.registerInfo("Length of building: #{length}")
+    runner.registerInfo("Width of building: #{width}")
+    
   end
 end
 
