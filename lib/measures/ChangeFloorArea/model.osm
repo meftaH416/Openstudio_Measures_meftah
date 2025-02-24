@@ -6,8 +6,8 @@ OS:Version,
 OS:Site,
   {58c3e201-6a59-4e04-9084-6f2e18cb7de9}, !- Handle
   Columbia Regional Airport,              !- Name
-  39.7653,                                !- Latitude {deg}
-  39.7653,                                !- Longitude {deg}
+  38.82,                                  !- Latitude {deg}
+  -92.22,                                 !- Longitude {deg}
   -6,                                     !- Time Zone {hr}
   272,                                    !- Elevation {m}
   ;                                       !- Terrain
@@ -22,7 +22,7 @@ OS:ClimateZones,
   ASHRAE,                                 !- Climate Zone Institution Name 1
   ANSI/ASHRAE Standard 169,               !- Climate Zone Document Name 1
   2006,                                   !- Climate Zone Document Year 1
-  ,                                       !- Climate Zone Value 1
+  4A,                                     !- Climate Zone Value 1
   CEC,                                    !- Climate Zone Institution Name 2
   California Climate Zone Descriptions,   !- Climate Zone Document Name 2
   1995,                                   !- Climate Zone Document Year 2
@@ -293,22 +293,6 @@ OS:Output:Table:SummaryReports,
 
 OS:Output:Diagnostics,
   {142170a8-02a6-4fde-ae33-cb133212f96e}; !- Handle
-
-OS:WeatherFile,
-  {1e40d709-f7de-4139-990e-f4345aee61ea}, !- Handle
-  Columbia Regional Airport,              !- City
-  MO,                                     !- State Province Region
-  USA,                                    !- Country
-  TMY3,                                   !- Data Source
-  724450,                                 !- WMO Number
-  38.82,                                  !- Latitude {deg}
-  -92.22,                                 !- Longitude {deg}
-  -6,                                     !- Time Zone {hr}
-  272,                                    !- Elevation {m}
-  /private/var/folders/t2/t9c9__9x62l0ft4c_lngxr980000gn/T/osmodel-1740326546-85/resources/files/USA_MO_Columbia.Rgnl.AP.724450_TMY3.epw, !- Url
-  9EB50EF2,                               !- Checksum
-  ,                                       !- Start Date Actual Year
-  Sunday;                                 !- Start Day of Week
 
 OS:SizingPeriod:DesignDay,
   {1cc09e4e-bbee-4ec3-96fd-586b6241c2fb}, !- Handle
@@ -2755,4 +2739,20 @@ OS:SubSurface,
   27.432, 0.0254, 0.9144,                 !- X,Y,Z Vertex 2 {m}
   27.432, 18.2626, 0.9144,                !- X,Y,Z Vertex 3 {m}
   27.432, 18.2626, 1.67852256267409;      !- X,Y,Z Vertex 4 {m}
+
+OS:WeatherFile,
+  {f56af5fa-1593-4179-b200-a0bed4f83750}, !- Handle
+  Columbia Regional Airport,              !- City
+  MO,                                     !- State Province Region
+  USA,                                    !- Country
+  TMY3,                                   !- Data Source
+  724450,                                 !- WMO Number
+  38.82,                                  !- Latitude {deg}
+  -92.22,                                 !- Longitude {deg}
+  -6,                                     !- Time Zone {hr}
+  272,                                    !- Elevation {m}
+  USA_MO_Columbia.Rgnl.AP.724450_TMY3.epw, !- Url
+  9EB50EF2,                               !- Checksum
+  ,                                       !- Start Date Actual Year
+  Sunday;                                 !- Start Day of Week
 
