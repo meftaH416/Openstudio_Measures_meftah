@@ -78,7 +78,53 @@ class ChangeFloorArea < OpenStudio::Measure::ModelMeasure
     # Log the final width and length of the building
     runner.registerInfo("Length of building: #{length}")
     runner.registerInfo("Width of building: #{width}")
-    
+
+    # Aspect ratio of building along east west direction
+    ar = length/width
+    runner.registerInfo("Aspect ratio (AR): #{ar}")
+
+    # new length after changing floor area
+    old_area = length * width 
+    new_area = old_area * fa_fraction
+    new_width = Math.sqrt(new_area/ar)
+    new_length = ar * new_width
+    runner.registerInfo("Old and new area are #{old_area} and #{new_area}")
+    runner.registerInfo("New width and length are #{new_width} and #{new_length}")
+
+    # Calculate the scaling ratios for length and width
+    len_ratio = new_length / length  # Ratio for scaling length
+    wid_ratio = new_width / width    # Ratio for scaling width
+
+    # Loop through all surfaces and modify the vertices based on these ratios
+    surfaces.each do |surface|
+      runner.registerInfo("Surface Name: #{surface.name}")
+      
+      # Retrieve the vertices of the surface
+      original_vertices = surface.vertices
+      
+      # Create a new array for the modified vertices
+      new_vertices = original_vertices.map do |vertex|
+        # Modify the coordinates using the scaling ratios
+        new_x = vertex.x * len_ratio  # Scale X by len_ratio
+        new_y = vertex.y * wid_ratio  # Scale Y by wid_ratio
+        new_z = vertex.z              # Keep Z unchanged (if necessary)
+        
+        # Create a new Point3d with modified coordinates
+        OpenStudio::Point3d.new(new_x, new_y, new_z)
+      end
+
+      # Set the new vertices to the surface
+      surface.setVertices(new_vertices)
+
+      # Log the new vertices for each surface
+      runner.registerInfo("Updated Vertices for surface #{surface.name}:")
+      new_vertices.each do |vertex|
+        runner.registerInfo("  Vertex: (#{vertex.x}, #{vertex.y}, #{vertex.z})")
+      end
+    end
+
+    runner.registerInfo("Surface vertices updated in the model with scaling ratios.")
+
   end
 end
 
