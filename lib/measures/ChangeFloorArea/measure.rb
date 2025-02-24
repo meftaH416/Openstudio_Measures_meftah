@@ -12,18 +12,19 @@ class ChangeFloorArea < OpenStudio::Measure::ModelMeasure
   end
 
   def description
-    return "This measure will change the floor area of a building multiplying by a user-defined number."
+    return "This measure will change the floor area of a building multiplying by a user-defined fraction."
   end
 
   def modeler_description
-    return "The floor area and associated vertices of the building surfaces will be changed."
+    return "The floor area and associated vertices of the building surfaces will be changed.
+            Primarily it is tested for a single zone model"
   end
 
   # return a vector of arguments
   def arguments(model)
     args = OpenStudio::Measure::OSArgumentVector.new
 
-    # make double argument for fa_fraction
+    # Fraction of floor area to be increased
     fa_fraction = OpenStudio::Measure::OSArgument.makeDoubleArgument("fa_fraction", true)
     fa_fraction.setDisplayName('Fractional increase (or decrease) in floor area')
     fa_fraction.setDefaultValue(1.0)
@@ -95,10 +96,10 @@ class ChangeFloorArea < OpenStudio::Measure::ModelMeasure
     len_ratio = new_length / length  # Ratio for scaling length
     wid_ratio = new_width / width    # Ratio for scaling width
 
+
+
     # Loop through all surfaces and modify the vertices based on these ratios
-    surfaces.each do |surface|
-      runner.registerInfo("Surface Name: #{surface.name}")
-      
+    surfaces.each do |surface|      
       # Retrieve the vertices of the surface
       original_vertices = surface.vertices
       
