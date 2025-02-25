@@ -3,19 +3,19 @@
   <schema_version>3.1</schema_version>
   <name>import_idf_to_os</name>
   <uid>9389d683-ac75-4727-b0e1-be09703ad71b</uid>
-  <version_id>a2818fec-a5ff-4cd9-bb2d-c00fa4d69538</version_id>
-  <version_modified>2025-02-25T06:27:00Z</version_modified>
+  <version_id>768611a4-028d-451f-9df0-a313771799aa</version_id>
+  <version_modified>2025-02-25T06:42:41Z</version_modified>
   <xml_checksum>A06C64E8</xml_checksum>
   <class_name>ImportIDFToOS</class_name>
   <display_name>Import IDF to OS</display_name>
   <description>This measure allows you to import an IDF file to Openstudio without further process</description>
-  <modeler_description>This measure allows the user to import an IDF file to Openstudio without editing. User may require to import weather file only. 
-</modeler_description>
+  <modeler_description>This measure allows the user to import an IDF file to Openstudio without editing. User may require to import weather file only.
+    Openstudio can not import HVAC and other objects. This measure will make sure that all IDF objects are imported</modeler_description>
   <arguments>
     <argument>
       <name>source_idf_path</name>
-      <display_name>External IDF File Name</display_name>
-      <description>Name of the IDF file to inject objects from. This is the filename with the extension (e.g. MyModel.idf). Optionally this can inclucde the full file path, but for most use cases should just be file name.</description>
+      <display_name>IDF File Name</display_name>
+      <description>The idf file to be imported</description>
       <type>String</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -94,7 +94,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>B252321B</checksum>
+      <checksum>5B238F8C</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -111,19 +111,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>30763794</checksum>
-    </file>
-    <file>
-      <filename>EnvelopeAndLoadTestModel_01.osm</filename>
-      <filetype>osm</filetype>
-      <usage_type>test</usage_type>
-      <checksum>E11F67BD</checksum>
-    </file>
-    <file>
-      <filename>Example B - BlockEnergyCharge.idf</filename>
-      <filetype>idf</filetype>
-      <usage_type>test</usage_type>
-      <checksum>F90DD242</checksum>
+      <checksum>71E837FB</checksum>
     </file>
     <file>
       <filename>measure_Test.rb</filename>
@@ -132,10 +120,10 @@
       <checksum>BDCB0435</checksum>
     </file>
     <file>
-      <filename>model_test.osw</filename>
-      <filetype>osw</filetype>
+      <filename>model_test.osm</filename>
+      <filetype>osm</filetype>
       <usage_type>test</usage_type>
-      <checksum>F5FABCCF</checksum>
+      <checksum>5FEC4414</checksum>
     </file>
   </files>
 </measure>
