@@ -5,7 +5,7 @@
 # Import IDF to OS
 
 ## Description
-This measure allows you to import an IDF file to Openstudio without further process
+This measure allows you to import an IDF file to Openstudio without further process. It is created on top of Inject IDF Object measure by NREL.
 
 ## Modeler Description
 This measure allows the user to import an IDF file to Openstudio without editing. User may require to import weather file only.
