@@ -3,18 +3,25 @@
   <schema_version>3.1</schema_version>
   <name>change_building_size</name>
   <uid>7e034a2e-b90a-4f7d-9d46-66a526fc4d42</uid>
-  <version_id>c78958ae-e7e6-4c59-b71a-e292522d4a61</version_id>
-  <version_modified>2025-03-07T07:48:06Z</version_modified>
+  <version_id>ee81da18-ef2f-4195-90b1-8d96cf382f8d</version_id>
+  <version_modified>2025-03-07T08:30:08Z</version_modified>
   <xml_checksum>5BA7A10B</xml_checksum>
   <class_name>ChangeBuildingSize</class_name>
   <display_name>Change Building Size</display_name>
-  <description>This measure will change the floor area of a building multiplying by a user-defined fraction.</description>
-  <modeler_description>The floor area and associated vertices of the building surfaces will be changed.
-    Primarily it is tested for a single zone model.</modeler_description>
+  <description>This measure will change the building area (footprint) and height of a building multiplying by user-defined fractions.</description>
+  <modeler_description>The floor area, roof area, and associated vertices of the building surfaces, as well as the building height, will be changed.</modeler_description>
   <arguments>
     <argument>
       <name>fa_fraction</name>
       <display_name>Fractional increase (or decrease) in floor area</display_name>
+      <type>Double</type>
+      <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>1</default_value>
+    </argument>
+    <argument>
+      <name>height_fraction</name>
+      <display_name>Fractional increase (or decrease) in building height</display_name>
       <type>Double</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
@@ -109,7 +116,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>487D97AC</checksum>
+      <checksum>20725C47</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -126,19 +133,19 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>5AD6617F</checksum>
+      <checksum>299B21B8</checksum>
     </file>
     <file>
       <filename>model_test.osm</filename>
       <filetype>osm</filetype>
       <usage_type>test</usage_type>
-      <checksum>5FEC4414</checksum>
+      <checksum>8789273B</checksum>
     </file>
     <file>
       <filename>test.rb</filename>
       <filetype>rb</filetype>
       <usage_type>test</usage_type>
-      <checksum>CD6633B7</checksum>
+      <checksum>098816D3</checksum>
     </file>
   </files>
 </measure>

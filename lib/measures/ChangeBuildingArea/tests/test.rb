@@ -13,17 +13,17 @@ class ChangeBuildingSize_Test < Minitest::Test
     @model = model.get
   end
 
-  def test_floor_area
-    measure = ChangeFloorArea.new
+  def test_floor_area_and_height
+    measure = ChangeBuildingSize.new
     runner = OpenStudio::Measure::OSRunner.new(OpenStudio::WorkflowJSON.new)
     arguments = measure.arguments(@model)
     argument_map = OpenStudio::Measure.convertOSArgumentVectorToMap(arguments)
 
-    puts argument_map.inspect
-
-    # Variable: Floor area to be changed
+    # Variable: Fraction to change floor area and height
     fa_fraction = 1.1  # Example: 10% increase in floor area
+    height_fraction = 1.05  # Example: 5% increase in building height
     argument_map['fa_fraction'].setValue(fa_fraction)
+    argument_map['height_fraction'].setValue(height_fraction)
 
     # Run the measure
     measure.run(@model, runner, argument_map)
@@ -45,6 +45,18 @@ class ChangeBuildingSize_Test < Minitest::Test
       new_area = old_area * fa_fraction
 
       assert_in_delta(new_area, surface.grossArea, 0.1, "Area was not scaled correctly for surface #{surface.name}.")
+    end
+
+    # Check that height has been updated
+    # Get the old and new height for the building surfaces (walls and roof)
+    old_height = @model.getSurfaces.select { |s| s.surfaceType == "Wall" || s.surfaceType == "RoofCeiling" }.map { |s| s.vertices.map(&:z).max }.max
+    new_height = old_height * height_fraction
+
+    @model.getSurfaces.each do |surface|
+      next if surface.surfaceType == "Floor" || surface.surfaceType == "RoofCeiling" # Skip floor and roof surfaces for height scaling
+
+      surface_height = surface.vertices.map(&:z).max
+      assert_in_delta(new_height, surface_height, 0.1, "Height was not scaled correctly for surface #{surface.name}.")
     end
   end
 end

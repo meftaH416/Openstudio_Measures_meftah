@@ -5,10 +5,10 @@
 # Change Building Size
 
 ## Description
-This measure will change the building area (footprint) of a building multiplying by a user-defined fraction. Building of any regular shape polygon can be applicable to this measure. 
+This measure will change the building area (footprint) and height of a building multiplying by user-defined fractions.
 
 ## Modeler Description
-The floor area and associated vertices of the building surfaces will be changed. Primarily it is tested for a single zone model.
+The floor area, roof area, and associated vertices of the building surfaces, as well as the building height, will be changed.
 
 ## Measure Type
 ModelMeasure
@@ -22,6 +22,17 @@ ModelMeasure
 ### Fractional increase (or decrease) in floor area
 
 **Name:** fa_fraction,
+**Type:** Double,
+**Units:** ,
+**Required:** true,
+**Model Dependent:** false
+
+
+
+
+### Fractional increase (or decrease) in building height
+
+**Name:** height_fraction,
 **Type:** Double,
 **Units:** ,
 **Required:** true,

@@ -9,12 +9,11 @@ class ChangeBuildingSize < OpenStudio::Measure::ModelMeasure
   end
 
   def description
-    return "This measure will change the building area (footprint) of a building multiplying by a user-defined fraction."
+    return "This measure will change the building area (footprint) and height of a building multiplying by user-defined fractions."
   end
 
   def modeler_description
-    return "The floor area and associated vertices of the building surfaces will be changed.
-    Primarily it is tested for a single zone model."
+    return "The floor area, roof area, and associated vertices of the building surfaces, as well as the building height, will be changed."
   end
 
   # return a vector of arguments
@@ -26,6 +25,12 @@ class ChangeBuildingSize < OpenStudio::Measure::ModelMeasure
     fa_fraction.setDisplayName('Fractional increase (or decrease) in floor area')
     fa_fraction.setDefaultValue(1.0)
     args << fa_fraction
+
+    # Fraction of building height to be increased
+    height_fraction = OpenStudio::Measure::OSArgument.makeDoubleArgument("height_fraction", true)
+    height_fraction.setDisplayName('Fractional increase (or decrease) in building height')
+    height_fraction.setDefaultValue(1.0)
+    args << height_fraction
 
     return args
   end
@@ -41,6 +46,7 @@ class ChangeBuildingSize < OpenStudio::Measure::ModelMeasure
 
     # assign the user inputs to variables
     fa_fraction = runner.getDoubleArgumentValue("fa_fraction", user_arguments)
+    height_fraction = runner.getDoubleArgumentValue("height_fraction", user_arguments)
 
     # Get all surfaces
     surfaces = model.getSurfaces
@@ -91,11 +97,16 @@ class ChangeBuildingSize < OpenStudio::Measure::ModelMeasure
     end
 
     total_old_area = 0.0
-    floor_surfaces = []
+    total_old_height = 0.0
+    floor_and_roof_surfaces = []
+
+    # Track old and new height values
+    old_height = 0.0
+    new_height = 0.0
 
     surfaces.each do |surface|
-      if surface.surfaceType == "Floor"
-        floor_surfaces << surface
+      if surface.surfaceType == "Floor" || surface.surfaceType == "RoofCeiling"
+        floor_and_roof_surfaces << surface
 
         vertices = surface.vertices.select { |v| v.z == 0 }.map { |v| [v.x, v.y] }
 
@@ -108,15 +119,15 @@ class ChangeBuildingSize < OpenStudio::Measure::ModelMeasure
         total_old_area += floor_area
 
         side_lengths = calculate_side_lengths(vertices)
-        runner.registerInfo("Floor #{surface.name}: Area = #{floor_area} m², Side lengths = #{side_lengths.join(', ')} m")
+        runner.registerInfo("#{surface.surfaceType} #{surface.name}: Area = #{floor_area} m², Side lengths = #{side_lengths.join(', ')} m")
       end
     end
 
-    # Scaling factor for each side length
+    # Scaling factor for each side length (floor area)
     len_wid_frac = Math.sqrt(fa_fraction)
     runner.registerInfo("Scaling factor for sides: #{len_wid_frac}")
 
-    # Scale all surfaces based on centroid
+    # Apply the scaling to all floor and roof surfaces
     surfaces.each do |surface|
       original_vertices = surface.vertices
       runner.registerInfo("Old vertices for #{surface.name}:")
@@ -134,20 +145,15 @@ class ChangeBuildingSize < OpenStudio::Measure::ModelMeasure
       end
 
       surface.setVertices(new_vertices)
-      
+
       runner.registerInfo("Updated vertices for #{surface.name}:")
       new_vertices.each { |v| runner.registerInfo("  (#{v.x}, #{v.y}, #{v.z})") }
     end
 
-
-
-    ## Recalculating new floor area. This checks the accuracy of the measure
+    ## Recalculating new floor and roof area. This checks the accuracy of the measure
     total_new_area = 0.0
-    floor_surfaces = []
     surfaces.each do |surface|
-      if surface.surfaceType == "Floor"
-        floor_surfaces << surface
-
+      if surface.surfaceType == "Floor" || surface.surfaceType == "RoofCeiling"
         vertices = surface.vertices.select { |v| v.z == 0 }.map { |v| [v.x, v.y] }
 
         if vertices.length < 3
@@ -159,14 +165,37 @@ class ChangeBuildingSize < OpenStudio::Measure::ModelMeasure
         total_new_area += new_floor_area
 
         side_lengths = calculate_side_lengths(vertices)
-        runner.registerInfo("New Floor #{surface.name}: Area = #{new_floor_area} m², Side lengths = #{side_lengths.join(', ')} m")
+        runner.registerInfo("New #{surface.surfaceType} #{surface.name}: Area = #{new_floor_area} m², Side lengths = #{side_lengths.join(', ')} m")
       end
     end
 
-    # new_area = total_old_area * fa_fraction
-    runner.registerInfo("Old total area: #{total_old_area} m²")
-    runner.registerInfo("New total area: #{total_new_area} m² (Scaling factor: #{fa_fraction})")
+    # Apply height scaling to vertical surfaces (walls, windows, doors) and the roof
+    surfaces.each do |surface|
+      next if surface.surfaceType == "Floor" || surface.surfaceType == "RoofCeiling" # Skip floor and roof surfaces for height scaling
 
+      runner.registerInfo("Scaling height of surface: #{surface.name}")
+
+      original_vertices = surface.vertices
+      new_vertices = original_vertices.map do |vertex|
+        # Scale the Z-coordinate to apply height fraction
+        new_z = vertex.z * height_fraction
+        OpenStudio::Point3d.new(vertex.x, vertex.y, new_z)
+      end
+
+      surface.setVertices(new_vertices)
+      runner.registerInfo("Updated height for #{surface.name}:")
+      new_vertices.each { |v| runner.registerInfo("  (#{v.x}, #{v.y}, #{v.z})") }
+    end
+
+    # Calculate and show the old and new building height (max Z-value for vertical surfaces)
+    old_height = surfaces.select { |s| s.surfaceType == "Wall" || s.surfaceType == "RoofCeiling" }.map { |s| s.vertices.map(&:z).max }.max
+    new_height = old_height * height_fraction
+
+    runner.registerInfo("Old building height: #{old_height} m")
+    runner.registerInfo("New building height: #{new_height} m")
+
+    runner.registerInfo("Old total area: #{total_old_area} m²")
+    runner.registerInfo("New total area: #{total_new_area} m² (Scaling factor for area: #{fa_fraction})")
     return true
   end
 end
