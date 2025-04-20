@@ -19,7 +19,7 @@ EnergyPlusMeasure
 ## Arguments
 
 
-### Time step in an hour
+### Time step in an hour (Value should be equal or greater than 20)
 
 **Name:** time_step,
 **Type:** String,
@@ -27,20 +27,36 @@ EnergyPlusMeasure
 **Required:** true,
 **Model Dependent:** false
 
-### Envelope where PCM is intended to add
+### Choose Construction where PCM is intended to add
 
 **Name:** envelope_name,
-**Type:** String,
+**Type:** Choice,
 **Units:** ,
 **Required:** true,
 **Model Dependent:** false
 
-### PCM Layer Position
+### 1st PCM Layer Position
 
 **Name:** pcm_index,
 **Type:** Integer,
 **Units:** ,
 **Required:** true,
+**Model Dependent:** false
+
+### (Optional): Choose another Construction where PCM is intended to add
+
+**Name:** envelope_name2,
+**Type:** Choice,
+**Units:** ,
+**Required:** false,
+**Model Dependent:** false
+
+### 2nd PCM Layer Position
+
+**Name:** pcm_index2,
+**Type:** Integer,
+**Units:** ,
+**Required:** false,
 **Model Dependent:** false
 
 ### PCM Layer Name
