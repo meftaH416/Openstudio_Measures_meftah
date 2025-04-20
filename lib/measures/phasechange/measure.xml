@@ -1,36 +1,50 @@
 <?xml version="1.0"?>
 <measure>
   <schema_version>3.1</schema_version>
-  <name>idf_editing</name>
-  <uid>722fca36-fc10-40b8-a03a-53c7f33e0c60</uid>
-  <version_id>0cacd839-aa90-4392-8f6f-5054923f4e49</version_id>
-  <version_modified>2025-01-03T10:34:45Z</version_modified>
-  <xml_checksum>4E8E5ED3</xml_checksum>
-  <class_name>IDF_EDITING</class_name>
+  <name>add_pc_mto_env_2</name>
+  <uid>93bac9cf-7401-433b-9028-97b478320a30</uid>
+  <version_id>8785d762-3d86-4910-9d88-b0e948924c41</version_id>
+  <version_modified>2025-04-20T20:43:38Z</version_modified>
+  <xml_checksum>19028984</xml_checksum>
+  <class_name>AddPCMtoEnv</class_name>
   <display_name>AddPCMtoEnv</display_name>
   <description>This measure can create new material with phase change property from user inputs and edit the idf file to run simulation.</description>
   <modeler_description>This measure will replace heatbalance algorithm to CondFD, add new materials with phase change property and add the PCM material to a specific layer of any construction. </modeler_description>
   <arguments>
     <argument>
       <name>time_step</name>
-      <display_name>Time step in an hour</display_name>
+      <display_name>Time step in an hour (Value should be equal or greater than 20)</display_name>
       <type>String</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
     </argument>
     <argument>
       <name>envelope_name</name>
-      <display_name>Envelope where PCM is intended to add</display_name>
-      <type>String</type>
+      <display_name>Choose Construction where PCM is intended to add</display_name>
+      <type>Choice</type>
       <required>true</required>
       <model_dependent>false</model_dependent>
-      <default_value>Typical Insulated Wood Framed Exterior Wall R-15.63</default_value>
     </argument>
     <argument>
       <name>pcm_index</name>
-      <display_name>PCM Layer Position</display_name>
+      <display_name>1st PCM Layer Position</display_name>
       <type>Integer</type>
       <required>true</required>
+      <model_dependent>false</model_dependent>
+      <default_value>0</default_value>
+    </argument>
+    <argument>
+      <name>envelope_name2</name>
+      <display_name>(Optional): Choose another Construction where PCM is intended to add</display_name>
+      <type>Choice</type>
+      <required>false</required>
+      <model_dependent>false</model_dependent>
+    </argument>
+    <argument>
+      <name>pcm_index2</name>
+      <display_name>2nd PCM Layer Position</display_name>
+      <type>Integer</type>
+      <required>false</required>
       <model_dependent>false</model_dependent>
       <default_value>0</default_value>
     </argument>
@@ -201,6 +215,21 @@
       <datatype>string</datatype>
     </attribute>
     <attribute>
+      <name>Intended Software Tool</name>
+      <value>Apply Measure Now</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>OpenStudio Application</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
+      <name>Intended Software Tool</name>
+      <value>Parametric Analysis Tool</value>
+      <datatype>string</datatype>
+    </attribute>
+    <attribute>
       <name>Measure Type</name>
       <value>EnergyPlusMeasure</value>
       <datatype>string</datatype>
@@ -232,7 +261,7 @@
       <filename>README.md</filename>
       <filetype>md</filetype>
       <usage_type>readme</usage_type>
-      <checksum>2E00E0F3</checksum>
+      <checksum>7733B9FF</checksum>
     </file>
     <file>
       <filename>README.md.erb</filename>
@@ -249,7 +278,7 @@
       <filename>measure.rb</filename>
       <filetype>rb</filetype>
       <usage_type>script</usage_type>
-      <checksum>9E7E2798</checksum>
+      <checksum>AFC922DB</checksum>
     </file>
     <file>
       <filename>add_pc_mto_env_test.rb</filename>
