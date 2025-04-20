@@ -19,11 +19,11 @@ OS:ScheduleTypeLimits,
 
 OS:Site,
   {e4e0cf83-aa67-462b-ac86-dd69d24de0d1}, !- Handle
-  Buffalo Niagara Intl AP_NY_USA,         !- Name
-  42.93,                                  !- Latitude {deg}
-  -78.73,                                 !- Longitude {deg}
-  -5,                                     !- Time Zone {hr}
-  215,                                    !- Elevation {m}
+  Columbia Regional Airport,              !- Name
+  38.82,                                  !- Latitude {deg}
+  -92.22,                                 !- Longitude {deg}
+  -6,                                     !- Time Zone {hr}
+  272,                                    !- Elevation {m}
   City;                                   !- Terrain
 
 OS:SimulationControl,
@@ -1725,7 +1725,7 @@ OS:ClimateZones,
   ASHRAE,                                 !- Climate Zone Institution Name 1
   ANSI/ASHRAE Standard 169,               !- Climate Zone Document Name 1
   2006,                                   !- Climate Zone Document Year 1
-  5A,                                     !- Climate Zone Value 1
+  4A,                                     !- Climate Zone Value 1
   CEC,                                    !- Climate Zone Institution Name 2
   California Climate Zone Descriptions,   !- Climate Zone Document Name 2
   1995,                                   !- Climate Zone Document Year 2
@@ -3105,80 +3105,12 @@ OS:ThermostatSetpoint:DualSetpoint,
   {9434a79e-c36b-4cba-a6dc-431051b22206}, !- Heating Setpoint Temperature Schedule Name
   {866c3415-399f-4bad-9da9-7d8cd78d9612}; !- Cooling Setpoint Temperature Schedule Name
 
-OS:WeatherFile,
-  {3fd1a4d1-8a9d-4e8b-8c59-16cd6d07c8b7}, !- Handle
-  Buffalo Niagara Intl AP,                !- City
-  NY,                                     !- State Province Region
-  USA,                                    !- Country
-  TMY3,                                   !- Data Source
-  725280,                                 !- WMO Number
-  42.93,                                  !- Latitude {deg}
-  -78.73,                                 !- Longitude {deg}
-  -5,                                     !- Time Zone {hr}
-  215,                                    !- Elevation {m}
-  files/USA_NY_Buffalo.Niagara.Intl.AP.725280_TMY3.epw, !- Url
-  3A15D82B,                               !- Checksum
-  ,                                       !- Start Date Actual Year
-  Sunday;                                 !- Start Day of Week
-
 OS:Site:WaterMainsTemperature,
   {417b2eb7-17e5-408f-9e05-480ddc4555da}, !- Handle
   Correlation,                            !- Calculation Method
   ,                                       !- Temperature Schedule Name
   8.96666666666667,                       !- Annual Average Outdoor Air Temperature {C}
   26.2;                                   !- Maximum Difference In Monthly Average Outdoor Air Temperatures {deltaC}
-
-OS:SizingPeriod:DesignDay,
-  {a0bc18b4-f528-483e-94eb-d520b384a3c3}, !- Handle
-  Buffalo.Niagara.Intl.AP_NY_USA Ann Clg .4% Condns DB=>MWB, !- Name
-  30.3,                                   !- Maximum Dry-Bulb Temperature {C}
-  9.3,                                    !- Daily Dry-Bulb Temperature Range {deltaC}
-  98769,                                  !- Barometric Pressure {Pa}
-  5.7,                                    !- Wind Speed {m/s}
-  240,                                    !- Wind Direction {deg}
-  ,                                       !- Sky Clearness
-  No,                                     !- Rain Indicator
-  No,                                     !- Snow Indicator
-  21,                                     !- Day of Month
-  7,                                      !- Month
-  SummerDesignDay,                        !- Day Type
-  No,                                     !- Daylight Saving Time Indicator
-  Wetbulb,                                !- Humidity Condition Type
-  ,                                       !- Humidity Condition Day Schedule Name
-  21.8,                                   !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
-  ,                                       !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
-  ,                                       !- Enthalpy at Maximum Dry-Bulb {J/kg}
-  DefaultMultipliers,                     !- Dry-Bulb Temperature Range Modifier Type
-  ,                                       !- Dry-Bulb Temperature Range Modifier Day Schedule Name
-  ASHRAETau,                              !- Solar Model Indicator
-  ,                                       !- Beam Solar Day Schedule Name
-  ,                                       !- Diffuse Solar Day Schedule Name
-  0.462,                                  !- ASHRAE Clear Sky Optical Depth for Beam Irradiance {dimensionless}
-  2.001;                                  !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance {dimensionless}
-
-OS:SizingPeriod:DesignDay,
-  {24f95892-9f27-4e57-b8a7-47bfb67ce9fe}, !- Handle
-  Buffalo.Niagara.Intl.AP_NY_USA Ann Htg 99.6% Condns DB, !- Name
-  -16.3,                                  !- Maximum Dry-Bulb Temperature {C}
-  0,                                      !- Daily Dry-Bulb Temperature Range {deltaC}
-  98769,                                  !- Barometric Pressure {Pa}
-  5.1,                                    !- Wind Speed {m/s}
-  270,                                    !- Wind Direction {deg}
-  0,                                      !- Sky Clearness
-  No,                                     !- Rain Indicator
-  No,                                     !- Snow Indicator
-  21,                                     !- Day of Month
-  1,                                      !- Month
-  WinterDesignDay,                        !- Day Type
-  No,                                     !- Daylight Saving Time Indicator
-  Wetbulb,                                !- Humidity Condition Type
-  ,                                       !- Humidity Condition Day Schedule Name
-  -16.3,                                  !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
-  ,                                       !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
-  ,                                       !- Enthalpy at Maximum Dry-Bulb {J/kg}
-  DefaultMultipliers,                     !- Dry-Bulb Temperature Range Modifier Type
-  ,                                       !- Dry-Bulb Temperature Range Modifier Day Schedule Name
-  ASHRAEClearSky;                         !- Solar Model Indicator
 
 OS:Schedule:Ruleset,
   {c45010b7-3435-4d3c-a005-16f04508715d}, !- Handle
@@ -8428,4 +8360,204 @@ OS:Rendering:Color,
   255,                                    !- Rendering Red Value
   205,                                    !- Rendering Green Value
   235;                                    !- Rendering Blue Value
+
+OS:WeatherFile,
+  {2c9480dd-275b-4f2b-90ad-4da76b2926e2}, !- Handle
+  Columbia Regional Airport,              !- City
+  MO,                                     !- State Province Region
+  USA,                                    !- Country
+  TMY3,                                   !- Data Source
+  724450,                                 !- WMO Number
+  38.82,                                  !- Latitude {deg}
+  -92.22,                                 !- Longitude {deg}
+  -6,                                     !- Time Zone {hr}
+  272,                                    !- Elevation {m}
+  USA_MO_Columbia.Rgnl.AP.724450_TMY3.epw, !- Url
+  9EB50EF2,                               !- Checksum
+  ,                                       !- Start Date Actual Year
+  Sunday;                                 !- Start Day of Week
+
+OS:SizingPeriod:DesignDay,
+  {59ba354a-41e7-41fc-8edd-a30e0a31e39a}, !- Handle
+  Columbia Regional Airport Ann Clg .4% Condns Enth=>MDB, !- Name
+  31.9,                                   !- Maximum Dry-Bulb Temperature {C}
+  11,                                     !- Daily Dry-Bulb Temperature Range {deltaC}
+  98100,                                  !- Barometric Pressure {Pa}
+  4.4,                                    !- Wind Speed {m/s}
+  220,                                    !- Wind Direction {deg}
+  ,                                       !- Sky Clearness
+  No,                                     !- Rain Indicator
+  No,                                     !- Snow Indicator
+  21,                                     !- Day of Month
+  7,                                      !- Month
+  SummerDesignDay,                        !- Day Type
+  No,                                     !- Daylight Saving Time Indicator
+  Enthalpy,                               !- Humidity Condition Type
+  ,                                       !- Humidity Condition Day Schedule Name
+  23,                                     !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+  ,                                       !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+  82700,                                  !- Enthalpy at Maximum Dry-Bulb {J/kg}
+  DefaultMultipliers,                     !- Dry-Bulb Temperature Range Modifier Type
+  ,                                       !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+  ASHRAETau,                              !- Solar Model Indicator
+  ,                                       !- Beam Solar Day Schedule Name
+  ,                                       !- Diffuse Solar Day Schedule Name
+  0.448,                                  !- ASHRAE Clear Sky Optical Depth for Beam Irradiance {dimensionless}
+  2.098;                                  !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance {dimensionless}
+
+OS:SizingPeriod:DesignDay,
+  {54e1471c-9c46-47bf-86ee-6f6a293f9fb0}, !- Handle
+  Columbia Regional Airport Ann Clg .4% Condns DP=>MDB, !- Name
+  29.6,                                   !- Maximum Dry-Bulb Temperature {C}
+  11,                                     !- Daily Dry-Bulb Temperature Range {deltaC}
+  98100,                                  !- Barometric Pressure {Pa}
+  4.4,                                    !- Wind Speed {m/s}
+  220,                                    !- Wind Direction {deg}
+  ,                                       !- Sky Clearness
+  No,                                     !- Rain Indicator
+  No,                                     !- Snow Indicator
+  21,                                     !- Day of Month
+  7,                                      !- Month
+  SummerDesignDay,                        !- Day Type
+  No,                                     !- Daylight Saving Time Indicator
+  Dewpoint,                               !- Humidity Condition Type
+  ,                                       !- Humidity Condition Day Schedule Name
+  24.6,                                   !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+  ,                                       !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+  ,                                       !- Enthalpy at Maximum Dry-Bulb {J/kg}
+  DefaultMultipliers,                     !- Dry-Bulb Temperature Range Modifier Type
+  ,                                       !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+  ASHRAETau,                              !- Solar Model Indicator
+  ,                                       !- Beam Solar Day Schedule Name
+  ,                                       !- Diffuse Solar Day Schedule Name
+  0.448,                                  !- ASHRAE Clear Sky Optical Depth for Beam Irradiance {dimensionless}
+  2.098;                                  !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance {dimensionless}
+
+OS:SizingPeriod:DesignDay,
+  {8ac568f7-0698-4caf-8e10-9c812fc57282}, !- Handle
+  Columbia Regional Airport Ann Clg .4% Condns WB=>MDB, !- Name
+  31.9,                                   !- Maximum Dry-Bulb Temperature {C}
+  11,                                     !- Daily Dry-Bulb Temperature Range {deltaC}
+  98100,                                  !- Barometric Pressure {Pa}
+  4.4,                                    !- Wind Speed {m/s}
+  220,                                    !- Wind Direction {deg}
+  ,                                       !- Sky Clearness
+  No,                                     !- Rain Indicator
+  No,                                     !- Snow Indicator
+  21,                                     !- Day of Month
+  7,                                      !- Month
+  SummerDesignDay,                        !- Day Type
+  No,                                     !- Daylight Saving Time Indicator
+  Wetbulb,                                !- Humidity Condition Type
+  ,                                       !- Humidity Condition Day Schedule Name
+  26.2,                                   !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+  ,                                       !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+  ,                                       !- Enthalpy at Maximum Dry-Bulb {J/kg}
+  DefaultMultipliers,                     !- Dry-Bulb Temperature Range Modifier Type
+  ,                                       !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+  ASHRAETau,                              !- Solar Model Indicator
+  ,                                       !- Beam Solar Day Schedule Name
+  ,                                       !- Diffuse Solar Day Schedule Name
+  0.448,                                  !- ASHRAE Clear Sky Optical Depth for Beam Irradiance {dimensionless}
+  2.098;                                  !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance {dimensionless}
+
+OS:SizingPeriod:DesignDay,
+  {a5faa607-6f22-4b32-a9a4-7814905363cc}, !- Handle
+  Columbia Regional Airport Ann Clg .4% Condns DB=>MWB, !- Name
+  34.8,                                   !- Maximum Dry-Bulb Temperature {C}
+  11,                                     !- Daily Dry-Bulb Temperature Range {deltaC}
+  98100,                                  !- Barometric Pressure {Pa}
+  4.4,                                    !- Wind Speed {m/s}
+  220,                                    !- Wind Direction {deg}
+  ,                                       !- Sky Clearness
+  No,                                     !- Rain Indicator
+  No,                                     !- Snow Indicator
+  21,                                     !- Day of Month
+  7,                                      !- Month
+  SummerDesignDay,                        !- Day Type
+  No,                                     !- Daylight Saving Time Indicator
+  Wetbulb,                                !- Humidity Condition Type
+  ,                                       !- Humidity Condition Day Schedule Name
+  24.5,                                   !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+  ,                                       !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+  ,                                       !- Enthalpy at Maximum Dry-Bulb {J/kg}
+  DefaultMultipliers,                     !- Dry-Bulb Temperature Range Modifier Type
+  ,                                       !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+  ASHRAETau,                              !- Solar Model Indicator
+  ,                                       !- Beam Solar Day Schedule Name
+  ,                                       !- Diffuse Solar Day Schedule Name
+  0.448,                                  !- ASHRAE Clear Sky Optical Depth for Beam Irradiance {dimensionless}
+  2.098;                                  !- ASHRAE Clear Sky Optical Depth for Diffuse Irradiance {dimensionless}
+
+OS:SizingPeriod:DesignDay,
+  {8bff03d7-1146-4192-856e-4b56d082f8a1}, !- Handle
+  Columbia Regional Airport Ann Htg Wind 99.6% Condns WS=>MCDB, !- Name
+  2,                                      !- Maximum Dry-Bulb Temperature {C}
+  0,                                      !- Daily Dry-Bulb Temperature Range {deltaC}
+  98100,                                  !- Barometric Pressure {Pa}
+  12.5,                                   !- Wind Speed {m/s}
+  280,                                    !- Wind Direction {deg}
+  0,                                      !- Sky Clearness
+  No,                                     !- Rain Indicator
+  No,                                     !- Snow Indicator
+  21,                                     !- Day of Month
+  1,                                      !- Month
+  WinterDesignDay,                        !- Day Type
+  No,                                     !- Daylight Saving Time Indicator
+  Wetbulb,                                !- Humidity Condition Type
+  ,                                       !- Humidity Condition Day Schedule Name
+  2,                                      !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+  ,                                       !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+  ,                                       !- Enthalpy at Maximum Dry-Bulb {J/kg}
+  DefaultMultipliers,                     !- Dry-Bulb Temperature Range Modifier Type
+  ,                                       !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+  ASHRAEClearSky;                         !- Solar Model Indicator
+
+OS:SizingPeriod:DesignDay,
+  {87eb0151-e62b-49af-96e7-66933412cadf}, !- Handle
+  Columbia Regional Airport Ann Hum_n 99.6% Condns DP=>MCDB, !- Name
+  -15.9,                                  !- Maximum Dry-Bulb Temperature {C}
+  0,                                      !- Daily Dry-Bulb Temperature Range {deltaC}
+  98100,                                  !- Barometric Pressure {Pa}
+  4.4,                                    !- Wind Speed {m/s}
+  280,                                    !- Wind Direction {deg}
+  0,                                      !- Sky Clearness
+  No,                                     !- Rain Indicator
+  No,                                     !- Snow Indicator
+  21,                                     !- Day of Month
+  1,                                      !- Month
+  WinterDesignDay,                        !- Day Type
+  No,                                     !- Daylight Saving Time Indicator
+  Dewpoint,                               !- Humidity Condition Type
+  ,                                       !- Humidity Condition Day Schedule Name
+  -22,                                    !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+  ,                                       !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+  ,                                       !- Enthalpy at Maximum Dry-Bulb {J/kg}
+  DefaultMultipliers,                     !- Dry-Bulb Temperature Range Modifier Type
+  ,                                       !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+  ASHRAEClearSky;                         !- Solar Model Indicator
+
+OS:SizingPeriod:DesignDay,
+  {767f3c57-eeff-4aa4-aef6-6c8157ce9390}, !- Handle
+  Columbia Regional Airport Ann Htg 99.6% Condns DB, !- Name
+  -17,                                    !- Maximum Dry-Bulb Temperature {C}
+  0,                                      !- Daily Dry-Bulb Temperature Range {deltaC}
+  98100,                                  !- Barometric Pressure {Pa}
+  4.4,                                    !- Wind Speed {m/s}
+  280,                                    !- Wind Direction {deg}
+  0,                                      !- Sky Clearness
+  No,                                     !- Rain Indicator
+  No,                                     !- Snow Indicator
+  21,                                     !- Day of Month
+  1,                                      !- Month
+  WinterDesignDay,                        !- Day Type
+  No,                                     !- Daylight Saving Time Indicator
+  Wetbulb,                                !- Humidity Condition Type
+  ,                                       !- Humidity Condition Day Schedule Name
+  -17,                                    !- Wetbulb or DewPoint at Maximum Dry-Bulb {C}
+  ,                                       !- Humidity Ratio at Maximum Dry-Bulb {kgWater/kgDryAir}
+  ,                                       !- Enthalpy at Maximum Dry-Bulb {J/kg}
+  DefaultMultipliers,                     !- Dry-Bulb Temperature Range Modifier Type
+  ,                                       !- Dry-Bulb Temperature Range Modifier Day Schedule Name
+  ASHRAEClearSky;                         !- Solar Model Indicator
 
