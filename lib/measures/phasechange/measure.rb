@@ -34,7 +34,7 @@
 
 
 # start the measure
-class IDF_EDITING < OpenStudio::Measure::EnergyPlusMeasure
+class AddPCMtoEnv < OpenStudio::Measure::EnergyPlusMeasure
   # human readable name
   def name
     return "AddPCMtoEnv"
@@ -48,27 +48,51 @@ class IDF_EDITING < OpenStudio::Measure::EnergyPlusMeasure
     return "This measure will replace heatbalance algorithm to CondFD, add new materials with phase change property and add the PCM material to a specific layer of any construction. "
   end
 
-
   # define the arguments that the user will input
   def arguments(workspace)
     args = OpenStudio::Measure::OSArgumentVector.new
 
     # the name of the zone to receive air
     time_step = OpenStudio::Measure::OSArgument.makeStringArgument('time_step', true)
-    time_step.setDisplayName('Time step in an hour')
+    time_step.setDisplayName('Time step in an hour (Value should be equal or greater than 20)')
     args << time_step
 
+    # Get all construction objects from the workspace
+    constructions = workspace.getObjectsByType("Construction".to_IddObjectType)
+
+    # Iterate over the constructions to find the target construction
+    envelope_constructions = OpenStudio::StringVector.new
+    constructions.each do |construction|
+      name = construction.getString(0)
+      envelope_constructions << name.get if name.is_initialized
+    end
+
     # Name of the external wall or roof where PCM will be added
-    envelope_name = OpenStudio::Measure::OSArgument.makeStringArgument('envelope_name', true)
-    envelope_name.setDisplayName('Envelope where PCM is intended to add')
-    envelope_name.setDefaultValue('Typical Insulated Wood Framed Exterior Wall R-15.63')
+    # envelope_name = OpenStudio::Measure::OSArgument.makeStringArgument('envelope_name', true)
+    envelope_name = OpenStudio::Measure::OSArgument.makeChoiceArgument('envelope_name', envelope_constructions, true)
+    envelope_name.setDisplayName('Choose Construction where PCM is intended to add')
+    # envelope_name.setDefaultValue('Typical Insulated Wood Framed Exterior Wall R-15.63')
+    envelope_name.setDefaultValue("")
     args << envelope_name
 
-    # PCM Material Arguments
+    # PCM Material Arguments for 1st Construction
     pcm_index = OpenStudio::Measure::OSArgument.makeIntegerArgument('pcm_index', true)
-    pcm_index.setDisplayName('PCM Layer Position')
+    pcm_index.setDisplayName('1st PCM Layer Position')
     pcm_index.setDefaultValue(0)
     args << pcm_index
+
+    # Name of the external wall or roof where PCM will be added
+    # envelope_name = OpenStudio::Measure::OSArgument.makeStringArgument('envelope_name', true)
+    envelope_name2 = OpenStudio::Measure::OSArgument.makeChoiceArgument('envelope_name2', envelope_constructions, false)
+    envelope_name2.setDisplayName('(Optional): Choose another Construction where PCM is intended to add')
+    envelope_name2.setDefaultValue("")
+    args << envelope_name2
+
+    # PCM Material Arguments for 2nd Construction
+    pcm_index2 = OpenStudio::Measure::OSArgument.makeIntegerArgument('pcm_index2', false)
+    pcm_index2.setDisplayName('2nd PCM Layer Position')
+    pcm_index2.setDefaultValue(0)
+    args << pcm_index2
 
     pcm_name = OpenStudio::Measure::OSArgument.makeStringArgument('pcm_name', true)
     pcm_name.setDisplayName('PCM Layer Name')
@@ -182,6 +206,22 @@ class IDF_EDITING < OpenStudio::Measure::EnergyPlusMeasure
     envelope_name = runner.getStringArgumentValue('envelope_name', user_arguments)
     pcm_index = runner.getIntegerArgumentValue('pcm_index', user_arguments)
 
+    # set second envelope as optional in case it is empty
+    optional_envelope_name2 = runner.getOptionalStringArgumentValue('envelope_name2', user_arguments)
+    if optional_envelope_name2.is_initialized
+      envelope_name2 = optional_envelope_name2.get
+    else
+      envelope_name2 = nil
+    end
+    # Get optional integer for the second PCM insertion
+    optional_pcm_index2 = runner.getOptionalIntegerArgumentValue('pcm_index2', user_arguments)
+
+    if optional_pcm_index2.is_initialized
+      pcm_index2 = optional_pcm_index2.get
+    else
+      pcm_index2 = nil
+    end
+
     pcm_name = runner.getStringArgumentValue('pcm_name', user_arguments)
     pcm_thickness = runner.getDoubleArgumentValue('pcm_thickness', user_arguments)
     pcm_cond = runner.getDoubleArgumentValue('pcm_cond', user_arguments)
@@ -204,16 +244,16 @@ class IDF_EDITING < OpenStudio::Measure::EnergyPlusMeasure
 
 
     # reporting initial condition of model
-    ts = workspace.getObjectsByType('Timestep'.to_IddObjectType).first
-    ts = ts.getString(0).to_s
-    runner.registerInitialCondition("The initial timestep is #{ts}")
+    ts_object = workspace.getObjectsByType('Timestep'.to_IddObjectType).first
+    current_ts = ts_object.getString(0).to_s.to_i
+    runner.registerInitialCondition("The initial timestep is #{current_ts}")
 
-    ts = workspace.getObjectsByType('Timestep'.to_IddObjectType).first
-    unless ts.getString(0).to_s <= 20.to_s
-      ts.setString(0, time_step)
-      runner.registerInfo('Timestep = #{time_step}')
+    if current_ts > 20
+      ts_object.setString(0, time_step)  # Assuming time_step is a string like "6"
     end
-    runner.registerFinalCondition("The final timestep is #{ts}")
+
+    runner.registerFinalCondition("The final timestep is #{time_step}")
+
 
     # HeatBalanceAlgorithm
     hba = workspace.getObjectsByType('HeatBalanceAlgorithm'.to_IddObjectType).first
@@ -277,9 +317,10 @@ class IDF_EDITING < OpenStudio::Measure::EnergyPlusMeasure
     # Get all construction objects from the workspace
     constructions = workspace.getObjectsByType("Construction".to_IddObjectType)
 
-    # Iterate over the constructions to find the target construction
+    # Iterate over the constructions to find the target constructions
     constructions.each do |construction|
-      if construction.getString(0).to_s == envelope_name # Match the construction name
+      # === First envelope (check for empty) ===
+      if !envelope_name.nil? && !envelope_name.empty? && construction.getString(0).to_s == envelope_name
         layers = []
         (1..construction.numFields - 1).each do |i|
           layer = construction.getString(i).to_s
@@ -295,17 +336,46 @@ class IDF_EDITING < OpenStudio::Measure::EnergyPlusMeasure
         end
 
         # Remove any extra fields left over from the original construction
-        (layers.size + 1..construction.numFields - 1).each do |i|
+        ((layers.size + 1)..(construction.numFields - 1)).each do |i|
           construction.setString(i, "") # Clear unused fields
         end
 
-        break
+        runner.registerInfo("PCM added to construction of envelope: #{envelope_name}")
       end
     end
 
+    # Check for empty second envelope before starting the loop
+    if envelope_name2.nil? || envelope_name2.empty?
+      runner.registerInfo("No second envelope selected. Skipping second PCM insertion.")
+      envelope_name2 = nil # Ensure envelope_name2 is set to nil if empty
+    end
+    constructions.each do |construction|
+      if envelope_name2 && !envelope_name2.empty? && construction.getString(0).to_s == envelope_name2
+        layers = []
+        (1..construction.numFields - 1).each do |i|
+          layer = construction.getString(i).to_s
+          layers << layer unless layer.empty?
+        end
+
+        # Insert the PCM material at the desired position
+        layers.insert(pcm_index2, pcm_name)
+
+        # Update the construction object with the modified layers
+        layers.each_with_index do |layer, i|
+          construction.setString(i + 1, layer)
+        end
+
+        # Remove any extra fields left over from the original construction
+        ((layers.size + 1)..(construction.numFields - 1)).each do |i|
+          construction.setString(i, "") # Clear unused fields
+        end
+
+        runner.registerInfo("PCM added to second construction of envelope: #{envelope_name2}")
+      end
+    end
 
   end
 end
 
 # register the measure to be used by the application
-IDF_EDITING.new.registerWithApplication
+AddPCMtoEnv.new.registerWithApplication
