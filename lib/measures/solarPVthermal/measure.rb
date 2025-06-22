@@ -14,7 +14,7 @@ class AddSolarPVT < OpenStudio::Measure::ModelMeasure
     return "This measure will add solar PhotoVoltaicThermal object to the system. PVT system can be add to airloop outdoor air system or plant loop"
   end
   def modeler_description
-    return "Solar PhotoVoltaicThermal object generate electricity and supply thermal energy. In order use thermal energy to heat water,
+    return "Solar PhotoVoltaicThermal object generate electricity and supply thermal energy. In order to use thermal energy to heat water,
     a Plant Loop must be created. The emply plant loop will contain a Pump to the supply inlet node, SetpointManagerSchedule object to supply outlet node
     and a water heating object to supply outlet. This Measure will create a Secondry Plant Loop that will contain a PV Collector to supply inlet, then a Pump,
     then a Storage Tank and the same SetpointManagerSchedule.
